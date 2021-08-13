@@ -1,10 +1,10 @@
 {
-  "name": "Monitor",
-  "version": "3.3.5",
+  "name": "MonitorPlugin",
+  "version": "3.3.15-SNAPSHOT",
   "description": "Graylog Monitor plugin",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Graylog2/graylog-plugin-sample"
+    "url": "Graylog2/graylog-plugin-monitor"
   },
   "scripts": {
     "build": "webpack --bail"

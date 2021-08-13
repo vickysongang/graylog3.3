@@ -4,7 +4,7 @@ import { Row, Col } from 'react-bootstrap';
 
 import { PageHeader } from 'components/common';
 
-const SamplePage = React.createClass({
+class SamplePage extends React.Component{
   render() {
     return (
       <PageHeader title="Sample Plugin">
@@ -14,6 +14,6 @@ const SamplePage = React.createClass({
       </PageHeader>
     );
   }
-});
+};
 
 export default SamplePage;
