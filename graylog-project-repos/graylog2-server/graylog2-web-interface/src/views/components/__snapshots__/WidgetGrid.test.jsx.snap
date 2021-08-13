@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<WidgetGrid /> should render with minimal props 1`] = `
+<ConnectStoresWrapper[WidgetGrid] stores=titles
+  allFields={Immutable.List []}
+  data={Object {}}
+  errors={Object {}}
+  fields={Immutable.List []}
+  onPositionsChange={[Function]}
+  titles={Immutable.Map {}}
+  widgets={Object {}}
+>
+  <WidgetGrid
+    allFields={Immutable.List []}
+    data={Object {}}
+    errors={Object {}}
+    fields={Immutable.List []}
+    locked={true}
+    onPositionsChange={[Function]}
+    positions={Object {}}
+    staticWidgets={Array []}
+    titles={Immutable.Map {}}
+    widgets={Object {}}
+  >
+    <SizeMe
+      monitorWidth={true}
+      refreshRate={100}
+    >
+      <div>
+        <WidgetGrid__DashboardWrap>
+          <StyledComponent
+            forwardedComponent={
+              Object {
+                "$$typeof": Symbol(react.forward_ref),
+                "attrs": Array [],
+                "componentStyle": ComponentStyle {
+                  "componentId": "WidgetGrid__DashboardWrap-sc-1bqopuh-0",
+                  "isStatic": false,
+                  "lastClassName": "jaucQL",
+                  "rules": Array [
+                    [Function],
+                  ],
+                },
+                "displayName": "WidgetGrid__DashboardWrap",
+                "foldedComponentIds": Array [],
+                "render": [Function],
+                "styledComponentId": "WidgetGrid__DashboardWrap-sc-1bqopuh-0",
+                "target": "div",
+                "toString": [Function],
+                "warnTooManyClasses": [Function],
+                "withComponent": [Function],
+              }
+            }
+            forwardedRef={null}
+          >
+            <div
+              className="WidgetGrid__DashboardWrap-sc-1bqopuh-0 jaucQL"
+            >
+              <span
+                width={200}
+              />
+            </div>
+          </StyledComponent>
+        </WidgetGrid__DashboardWrap>
+      </div>
+    </SizeMe>
+  </WidgetGrid>
+</ConnectStoresWrapper[WidgetGrid] stores=titles>
+`;

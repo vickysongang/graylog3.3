@@ -1,0 +1,24 @@
+{
+  "name": "${pluginClassName}",
+  "version": "${version}",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "${githubRepo}"
+  },
+  "scripts": {
+    "build": "webpack",
+    "lint": "eslint -c .eslintrc src/**/*",
+    "test": "jest"
+  },
+  "keywords": [
+    "graylog"
+  ],
+  "author": "${ownerName} <${ownerEmail}>",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "graylog-web-plugin": "file:${serverCheckoutPath}/graylog2-web-interface/packages/graylog-web-plugin"
+  }
+}

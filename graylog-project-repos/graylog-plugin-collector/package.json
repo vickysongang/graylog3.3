@@ -1,0 +1,24 @@
+{
+  "name": "CollectorPlugin",
+  "version": "3.3.15-SNAPSHOT",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "Graylog2/graylog-plugin-collector"
+  },
+  "scripts": {
+    "build": "webpack --bail"
+  },
+  "keywords": [
+    "graylog"
+  ],
+  "author": "Graylog, Inc. <hello@graylog.com>",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "immutable": "^3.7.5",
+    "semver": "^5.6.0"
+  },
+  "devDependencies": {
+    "graylog-web-plugin": "file:../graylog2-server/graylog2-web-interface/packages/graylog-web-plugin"
+  }
+}

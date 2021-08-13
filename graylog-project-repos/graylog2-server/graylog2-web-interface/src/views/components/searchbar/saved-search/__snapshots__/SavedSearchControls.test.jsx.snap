@@ -1,0 +1,115 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SavedSearchControls render the SavedSearchControls should render dirty 1`] = `
+<button
+  className="Button__StyledButton-c9cbmb-0 jVYrA btn btn-default"
+  disabled={false}
+  onClick={[Function]}
+  title="Unsaved changes"
+  type="button"
+>
+  <Icon
+    name="star"
+    style={
+      Object {
+        "color": "#ffd200",
+      }
+    }
+  >
+    <FontAwesomeIcon
+      icon={
+        Object {
+          "iconName": "star",
+          "prefix": "fas",
+        }
+      }
+      style={
+        Object {
+          "color": "#ffd200",
+        }
+      }
+    >
+      <svg
+        className="svg-inline--fa fa-star"
+      />
+    </FontAwesomeIcon>
+  </Icon>
+   Save
+</button>
+`;
+
+exports[`SavedSearchControls render the SavedSearchControls should render not dirty 1`] = `
+<button
+  className="Button__StyledButton-c9cbmb-0 jVYrA btn btn-default"
+  disabled={false}
+  onClick={[Function]}
+  title="Saved search"
+  type="button"
+>
+  <Icon
+    name="star"
+    style={
+      Object {
+        "color": "#0063be",
+      }
+    }
+  >
+    <FontAwesomeIcon
+      icon={
+        Object {
+          "iconName": "star",
+          "prefix": "fas",
+        }
+      }
+      style={
+        Object {
+          "color": "#0063be",
+        }
+      }
+    >
+      <svg
+        className="svg-inline--fa fa-star"
+      />
+    </FontAwesomeIcon>
+  </Icon>
+   Save
+</button>
+`;
+
+exports[`SavedSearchControls render the SavedSearchControls should render not dirty with unsaved view 1`] = `
+<button
+  className="Button__StyledButton-c9cbmb-0 jVYrA btn btn-default"
+  disabled={false}
+  onClick={[Function]}
+  title="Save search"
+  type="button"
+>
+  <Icon
+    name="star-o"
+    style={
+      Object {
+        "color": "",
+      }
+    }
+  >
+    <FontAwesomeIcon
+      icon={
+        Object {
+          "iconName": "star",
+          "prefix": "fas",
+        }
+      }
+      style={
+        Object {
+          "color": "",
+        }
+      }
+    >
+      <svg
+        className="svg-inline--fa fa-star"
+      />
+    </FontAwesomeIcon>
+  </Icon>
+   Save
+</button>
+`;

@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Widget /> should render with empty props 1`] = `
+<body>
+  <div>
+    <div
+      class="WidgetFrame__WidgetWrap-sc-1uccjgg-0 laVatb"
+      data-widget-id="widgetId"
+      style="overflow: hidden;"
+    >
+      <widget-header
+        editing="false"
+        hidedraghandle="false"
+        loading="false"
+        title="Widget Title"
+      >
+        <span>
+          <svg
+            class="svg-inline--fa fa-arrows-alt-h"
+          />
+        </span>
+         
+        <span
+          role="presentation"
+        >
+          <span
+            role="presentation"
+          >
+            <span>
+              <svg
+                class="svg-inline--fa fa-chevron-down"
+                data-testid="widgetActionDropDown"
+              />
+            </span>
+          </span>
+        </span>
+      </widget-header>
+      <div
+        class="spinnerContainer"
+      >
+        <svg
+          class="svg-inline--fa fa-sync"
+          data-testid="loading-widget"
+        />
+      </div>
+    </div>
+  </div>
+</body>
+`;
