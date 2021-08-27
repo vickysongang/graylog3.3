@@ -3,22 +3,24 @@ import webpackEntry from 'webpack-entry';
 import packageJson from '../../package.json';
 import { PluginManifest, PluginStore } from 'graylog-web-plugin/plugin';
 
-import SamplePage from 'pages/SamplePage';
+import MonitorCenter from 'pages/MonitorCenter';
+import MonitorRequestDetail from 'pages/MonitorRequestDetail';
 
 const manifest = new PluginManifest(packageJson, {
   routes: [
-    { path: '/system/sample', component: SamplePage },
+    { path: '/monitor/center', component: MonitorCenter },
+    { path: '/monitor/request', component: MonitorRequestDetail}
   ],
 
   // Adding an element to the top navigation pointing to /sample named "Sample":
 
   navigation: [
-    { path: '/system/sample', description: 'Sample' },
+    { path: '/monitor/center', description: 'Monitor' }
   ],
-
-  systemnavigation: [
-    { path: '/system/sample', description: 'Sample1' },
-  ],
+  //
+  // systemnavigation: [
+  //   { path: '/monitor/center', description: 'Monitor' },
+  // ],
 });
 
 PluginStore.register(manifest);

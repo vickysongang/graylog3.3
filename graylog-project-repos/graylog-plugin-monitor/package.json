@@ -15,6 +15,12 @@
   "author": "Song Ang <angsong@wizteco.com>",
   "license": "GPL-3.0",
   "dependencies": {
+    "echarts": "^4.2.0-rc.2",
+    "echarts-for-react": "^2.0.15-beta.0",
+    "moment": "^2.24.0",
+    "react-d3-tree": "^1.12.2",
+    "react-sortable-tree": "^2.6.0",
+    "react-treetable": "^5.4.0"
   },
   "devDependencies": {
     "graylog-web-plugin": "file:../graylog2-server/graylog2-web-interface/packages/graylog-web-plugin"
