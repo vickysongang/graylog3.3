@@ -1,7 +1,6 @@
 import React from 'react';
 import Reflux from 'reflux';
 import {MonitorActions, MonitorStore} from 'stores/MonitorStore';
-import {PageHeader} from 'components/common';
 import {Spinner} from 'components/common';
 import {Table} from 'react-bootstrap';
 import createReactClass from 'create-react-class';
@@ -9,6 +8,10 @@ import {Row} from 'components/graylog';
 
 const MonitorRequestDetail = createReactClass({
     mixins: [Reflux.connect(MonitorStore)],
+
+    componentWillMount() {
+        MonitorActions.getKongLogParams()
+    },
 
     componentDidMount() {
         this.loadDatas();
@@ -19,6 +22,8 @@ const MonitorRequestDetail = createReactClass({
     },
 
     loadDatas() {
+        let timeoutCondition = this.state.kongLogParams.timeout_condition
+        let errorCondition = this.state.kongLogParams.error_condition
         let {keyword, logType, client_app_name} = this.props.location.query
         keyword = keyword || '1 day ago';
         let uniqueKey = logType + "_" + keyword.replace(/ /g, "_") + "_request_detail";
@@ -27,7 +32,7 @@ const MonitorRequestDetail = createReactClass({
             uniqueKey = logType + "_" + client_app_name + "_" + keyword.replace(/ /g, "_") + "_request_detail";
             query += ' AND client_app_name:' + client_app_name;
         }
-        const promise = MonitorActions.getMonitorDatas('count', keyword, 'request', query, uniqueKey);
+        const promise = MonitorActions.getMonitorDatas('count', keyword, 'request', query, uniqueKey, timeoutCondition, errorCondition);
         promise.catch(() => {
             console.log('load data error');
         });
@@ -39,6 +44,8 @@ const MonitorRequestDetail = createReactClass({
 
     render() {
         let monitorDatas = this.state.monitorDatas;
+        let timeoutCondition = this.state.kongLogParams.timeout_condition
+        let errorCondition = this.state.kongLogParams.error_condition
         let {keyword, logType, client_app_name} = this.props.location.query
         keyword = keyword || '1 day ago';
         let uniqueKey = logType + "_" + keyword.replace(/ /g, "_") + "_request_detail";
@@ -84,9 +91,9 @@ const MonitorRequestDetail = createReactClass({
                             <th style={{textAlign: 'center', width: '5%'}}>#</th>
                             <th style={{textAlign: 'center', width: '45%'}}>请求路径</th>
                             <th style={{textAlign: 'center', width: '10%'}}>总访问量</th>
-                            <th style={{textAlign: 'center', width: '10%'}}>超时总访问量(耗时>10s)</th>
+                            <th style={{textAlign: 'center', width: '10%'}}>超时总访问量({timeoutCondition})</th>
                             <th style={{textAlign: 'center', width: '10%'}}>超时率</th>
-                            <th style={{textAlign: 'center', width: '10%'}}>错误总访问量(响应code>=500)</th>
+                            <th style={{textAlign: 'center', width: '10%'}}>错误总访问量({errorCondition})</th>
                             <th style={{textAlign: 'center', width: '10%'}}>错误率</th>
                         </tr>
                         </thead>

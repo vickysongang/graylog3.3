@@ -15,10 +15,16 @@ public abstract class MonitorPluginConfigurationUpdate {
 
     abstract String kongLogTypes();
 
+    abstract String timeoutCondition();
+
+    abstract String errorCondition();
+
     @JsonCreator
     public static MonitorPluginConfigurationUpdate create(
-            @JsonProperty("kongLogTypes") String kongLogTypes
+            @JsonProperty("kongLogTypes") String kongLogTypes,
+            @JsonProperty("timeoutCondition") String timeoutCondition,
+            @JsonProperty("errorCondition") String errorCondition
     ) {
-        return new AutoValue_MonitorPluginConfigurationUpdate(kongLogTypes);
+        return new AutoValue_MonitorPluginConfigurationUpdate(kongLogTypes, timeoutCondition, errorCondition);
     }
 }

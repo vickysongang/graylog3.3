@@ -15,7 +15,9 @@ const MonitorRateBarChart = createReactClass({
         subtext: PropTypes.string,
         logType: PropTypes.string,
         env: PropTypes.string,
-        rangeType: PropTypes.string
+        rangeType: PropTypes.string,
+        timeoutCondition: PropTypes.string,
+        errorCondition: PropTypes.string
     },
 
     componentWillMount() {
@@ -35,10 +37,11 @@ const MonitorRateBarChart = createReactClass({
     },
 
     loadDatas() {
-        let keyword = this.props.keyword || '1 day ago';
-        let uniqueKey = this.props.logType + "_" + keyword.replace(/ /g, "_") + "_request";
-        let query = 'type:' + this.props.logType + ' AND NOT response:404';
-        const promise = MonitorActions.getMonitorDatas('rate', keyword, 'client_app_name', query, uniqueKey);
+        let {keyword, logType, timeoutCondition, errorCondition} = this.props
+        keyword = keyword || '1 day ago';
+        let uniqueKey = logType + "_" + keyword.replace(/ /g, "_") + "_request";
+        let query = 'type:' + logType;
+        const promise = MonitorActions.getMonitorDatas('rate', keyword, 'client_app_name', query, uniqueKey, timeoutCondition, errorCondition);
         promise.catch(() => {
             console.log('load data error');
         });
@@ -48,7 +51,7 @@ const MonitorRateBarChart = createReactClass({
         let monitorDatas = this.state.monitorDatas;
         let keyword = this.props.keyword || '1 day ago';
         let key = this.props.logType + "_" + keyword.replace(/ /g, "_") + "_request";
-        let appNames = [], rateDatas = [], appData={};
+        let appNames = [], rateDatas = [], appData = {};
         if (monitorDatas[key]) {
             Object.keys(monitorDatas[key][0].terms).forEach((appName) => {
                 appNames.push(appName);

@@ -101,7 +101,21 @@ class MonitorPluginConfiguration extends React.Component {
                     <dd>
                         {config.kong_log_types
                             ? config.kong_log_types
-                            : ''}
+                            : '[not set]'}
+                    </dd>
+
+                    <dt>Timeout Condition:</dt>
+                    <dd>
+                        {config.timeout_condition
+                            ? config.timeout_condition
+                            : '[not set]'}
+                    </dd>
+
+                    <dt>Error Condition:</dt>
+                    <dd>
+                        {config.error_condition
+                            ? config.error_condition
+                            : '[not set]'}
                     </dd>
                 </dl>
 
@@ -124,12 +138,34 @@ class MonitorPluginConfiguration extends React.Component {
                                label="Kong Log Types"
                                help={(
                                    <span>
-                       Please Input Kong Log Types, separated by comma.
+                       Kong日志类型，多个以逗号隔开
                      </span>
                                )}
                                name="kong_log_types"
                                value={update.kong_log_types}
                                onChange={this._onUpdate('kong_log_types')}/>
+                        <Input id="timeout_condition"
+                               type="text"
+                               label="Timeout Condition"
+                               help={(
+                                   <span>
+                         接口超时的判断条件
+                     </span>
+                               )}
+                               name="timeout_condition"
+                               value={update.timeout_condition}
+                               onChange={this._onUpdate('timeout_condition')}/>
+                        <Input id="error_condition"
+                               type="text"
+                               label="Error Condition"
+                               help={(
+                                   <span>
+                         接口报错的判断条件
+                     </span>
+                               )}
+                               name="error_condition"
+                               value={update.error_condition}
+                               onChange={this._onUpdate('error_condition')}/>
                     </fieldset>
                 </BootstrapModalForm>
             </div>
@@ -145,6 +181,8 @@ MonitorPluginConfiguration.propTypes = {
 MonitorPluginConfiguration.defaultProps = {
     config: {
         kong_log_types: 'kong-log',
+        timeout_condition: '',
+        error_condition: ''
     },
 };
 

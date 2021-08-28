@@ -5,7 +5,7 @@ import TopNDataTable from '../components/TopNDataTable'
 import {Row} from 'components/graylog';
 import Reflux from 'reflux';
 import {MonitorActions, MonitorStore} from 'stores/MonitorStore';
-import { Button, ButtonToolbar  } from 'react-bootstrap';
+import {Button, ButtonToolbar} from 'react-bootstrap';
 
 const MonitorCenter = createReactClass({
     mixins: [Reflux.connect(MonitorStore)],
@@ -19,9 +19,7 @@ const MonitorCenter = createReactClass({
     },
 
     componentWillMount() {
-        MonitorActions.getKongLogTypes().then(() => {
-            console.log(this.state.kongLogTypes)
-        })
+        MonitorActions.getKongLogParams()
     },
 
     handleClick(logType) {
@@ -33,15 +31,21 @@ const MonitorCenter = createReactClass({
 
     render() {
         let kongLogTypeArray = ['kong-log']
-        if (this.state.kongLogTypes) {
-            kongLogTypeArray = this.state.kongLogTypes.split(',')
+        let kongLogParams = this.state.kongLogParams
+        console.log('kongLogParams is:', kongLogParams)
+        let kongLogTypes = this.state.kongLogParams.kong_log_types
+        if (kongLogTypes) {
+            kongLogTypeArray = kongLogTypes.split(',')
         }
+        let timeoutCondition = this.state.kongLogParams.timeout_condition
+        let errorCondition = this.state.kongLogParams.error_condition
         let currentLogType = this.state.currentLogType || kongLogTypeArray[0]
         let date = this.state.date
-        let key = currentLogType + (date ? (date+'').replace(/ /g,'-') : '')
-        console.log('currentLogType:' , currentLogType + ' key is:' + key)
+        let key = currentLogType + (date ? (date + '').replace(/ /g, '-') : '')
+        console.log('currentLogType:', currentLogType + ' key is:' + key +
+            ' timeoutCondition is:' + timeoutCondition + ' errorCondition is:' + errorCondition)
         return (
-            <Row className="content" style={{padding:'10px'}}>
+            <Row className="content" style={{padding: '10px'}}>
                 <div>
                     <div style={{
                         marginTop: '-5px',
@@ -52,13 +56,22 @@ const MonitorCenter = createReactClass({
                     }}>
                         <span style={{fontSize: 16, fontWeight: 'bold'}}>Kong请求监控</span>
                     </div>
-                    <div style={{ marginTop: '5px', marginBottom: '5px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                        <span style={{ fontSize: 14, fontWeight: 'bold' }}>日志类型切换：</span>
+                    <div style={{
+                        marginTop: '5px',
+                        marginBottom: '5px',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center'
+                    }}>
+                        <span style={{fontSize: 14, fontWeight: 'bold'}}>日志类型切换：</span>
                         <ButtonToolbar>
                             {
                                 kongLogTypeArray.map(item => {
-                                   return <Button  key={item} bsStyle={item === currentLogType ? 'primary' : 'default'} bsSize="xsmall" onClick={() => {this.handleClick(item)}}>
-                                       {item}
+                                    return <Button key={item} bsStyle={item === currentLogType ? 'primary' : 'default'}
+                                                   bsSize="xsmall" onClick={() => {
+                                        this.handleClick(item)
+                                    }}>
+                                        {item}
                                     </Button>
                                 })
                             }
@@ -69,13 +82,17 @@ const MonitorCenter = createReactClass({
                             <MonitorRateBarChart key={"KONG-LOG-24-RATE" + key}
                                                  text="24h内Kong请求"
                                                  keyword="1 day ago"
-                                                 subtext="应用异常请求占比（耗时>10s或者响应code>=500）"
+                                                 timeoutCondition={timeoutCondition}
+                                                 errorCondition={errorCondition}
+                                                 subtext={"应用异常请求占比（" + timeoutCondition + "或" + errorCondition + "）"}
                                                  width="100%"
                                                  logType={currentLogType}/>
                             <MonitorRateBarChart key={"KONG-LOG-48-RATE" + key}
                                                  text="48h-24h内Kong请求"
+                                                 timeoutCondition={timeoutCondition}
+                                                 errorCondition={errorCondition}
                                                  keyword="2 days ago to 1 day ago"
-                                                 subtext="应用异常请求占比（耗时>10s或者响应code>=500）"
+                                                 subtext={"应用异常请求占比（" + timeoutCondition + "或" + errorCondition + "）"}
                                                  width="100%"
                                                  logType={currentLogType}/>
                         </div>
@@ -83,10 +100,14 @@ const MonitorCenter = createReactClass({
                             <TopNDataTable key={"KONG-LOG-24-Top10" + key}
                                            logType={currentLogType}
                                            keyword="1 day ago"
+                                           timeoutCondition={timeoutCondition}
+                                           errorCondition={errorCondition}
                                            N={10}
                                            headerTitle="Kong 24h内异常请求访问Top10"/>
                             <TopNDataTable key={"KONG-LOG-48-TOP10" + key}
                                            logType={currentLogType}
+                                           timeoutCondition={timeoutCondition}
+                                           errorCondition={errorCondition}
                                            N={10}
                                            keyword="2 days ago to 1 day ago"
                                            headerTitle="Kong 48h-24h内异常请求访问Top10"/>

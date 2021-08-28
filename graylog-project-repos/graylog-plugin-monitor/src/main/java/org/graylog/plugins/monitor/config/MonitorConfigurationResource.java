@@ -4,7 +4,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.graylog2.Configuration;
 import org.graylog2.audit.AuditEventTypes;
 import org.graylog2.audit.jersey.AuditEvent;
 import org.graylog2.plugin.cluster.ClusterConfigService;
@@ -17,8 +16,6 @@ import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Api(value = "Monitor/Config", description = "Manage Monitor Config settings")
 @Path("/config")
@@ -43,7 +40,9 @@ public class MonitorConfigurationResource extends RestResource implements Plugin
                 MonitorPluginConfiguration.createDefault()
         );
         final MonitorPluginConfiguration.Builder newConfigBuilder = existingConfiguration.toBuilder()
-                .kongLogTypes(update.kongLogTypes());
+                .kongLogTypes(update.kongLogTypes())
+                .timeoutCondition(update.timeoutCondition())
+                .errorCondition(update.errorCondition());
         final MonitorPluginConfiguration newConfiguration = newConfigBuilder.build();
         clusterConfigService.write(newConfiguration);
         return Response.accepted(newConfiguration).build();

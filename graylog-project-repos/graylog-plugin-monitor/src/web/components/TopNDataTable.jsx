@@ -13,7 +13,9 @@ const TopNDataTable = createReactClass({
         headerTitle: PropTypes.string,
         logType: PropTypes.string,
         keyword: PropTypes.string,
-        N: PropTypes.number
+        N: PropTypes.number,
+        timeoutCondition: PropTypes.string,
+        errorCondition: PropTypes.string
     },
 
     componentDidMount() {
@@ -29,7 +31,7 @@ const TopNDataTable = createReactClass({
     loadDatas() {
         let rateDatas = this.getRateDatas();
 
-      //  let unnormalAppNames = Object.keys(rateDatas).filter(key => rateDatas[key] > 0.05)
+        //  let unnormalAppNames = Object.keys(rateDatas).filter(key => rateDatas[key] > 0.05)
         let unnormalAppNames = Object.keys(rateDatas).sort((key1, key2) => rateDatas[key2] - rateDatas[key1]).slice(0, 5)
         console.log("unnormalAppNames:" + unnormalAppNames)
         let orQuery = ''
@@ -39,14 +41,14 @@ const TopNDataTable = createReactClass({
         if (orQuery) {
             orQuery = orQuery.substr(0, orQuery.lastIndexOf("OR"))
         }
-        let {keyword, logType} = this.props
+        let {keyword, logType, timeoutCondition, errorCondition} = this.props
         keyword = keyword || '1 day ago';
         let uniqueKey = logType + "_" + keyword.replace(/ /g, "_") + "_request_topn_data";
-        let query = 'type: ' + logType + ' AND NOT response:404'
+        let query = 'type: ' + logType
         if (orQuery) {
             query = query + ' AND (' + orQuery + ')'
         }
-        const promise = MonitorActions.getMonitorDatas('count', keyword, 'request', query, uniqueKey, 'client_app_name');
+        const promise = MonitorActions.getMonitorDatas('count', keyword, 'request', query, uniqueKey, timeoutCondition, errorCondition, 'client_app_name');
         promise.catch(() => {
             console.log('load data error');
         });
