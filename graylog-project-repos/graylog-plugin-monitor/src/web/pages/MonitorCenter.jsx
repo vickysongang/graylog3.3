@@ -77,12 +77,12 @@ const MonitorCenter = createReactClass({
                         </div>
                         <div style={{...styles.containerItem, marginTop: '25px'}}>
                             <TopNDataTable key={"KONG-LOG-24-Top10"}
-                                           logType="kong-log"
+                                           logType={currentLogType}
                                            keyword="1 day ago"
                                            N={10}
                                            headerTitle="Kong 24h内异常请求访问Top10"/>
                             <TopNDataTable key={"KONG-LOG-48-TOP10"}
-                                           logType="kong-log"
+                                           logType={currentLogType}
                                            N={10}
                                            keyword="2 days ago to 1 day ago"
                                            headerTitle="Kong 48h-24h内异常请求访问Top10"/>

@@ -1,6 +1,6 @@
 {
   "name": "MonitorPlugin",
-  "version": "3.3.15-SNAPSHOT",
+  "version": "3.3.5",
   "description": "Graylog Monitor plugin",
   "repository": {
     "type": "git",
