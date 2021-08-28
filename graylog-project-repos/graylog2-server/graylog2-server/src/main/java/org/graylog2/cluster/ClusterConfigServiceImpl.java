@@ -163,12 +163,15 @@ public class ClusterConfigServiceImpl implements ClusterConfigService {
         final ImmutableSet.Builder<Class<?>> classes = ImmutableSet.builder();
 
         try (DBCursor<ClusterConfig> clusterConfigs = dbCollection.find()) {
+            System.out.println("size is:" + clusterConfigs.size());
             for (ClusterConfig clusterConfig : clusterConfigs) {
                 final String type = clusterConfig.type();
                 try {
+                    System.out.println("-------------->" + type );
                     final Class<?> cls = chainingClassLoader.loadClass(type);
                     classes.add(cls);
                 } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
                     LOG.debug("Couldn't find configuration class \"{}\"", type, e);
                 }
             }

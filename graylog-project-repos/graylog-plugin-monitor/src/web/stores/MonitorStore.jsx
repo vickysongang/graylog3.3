@@ -6,19 +6,35 @@ const moment = require('moment');
 require('moment/locale/zh-cn')
 moment.locale('zh-cn');
 import fetch from 'logic/rest/FetchProvider';
+import {PLUGIN_API_ENDPOINT} from "../Constants";
 
 export const MonitorActions = Reflux.createActions({
-    "getMonitorDatas": {asyncResult: true}
+    "getMonitorDatas": {asyncResult: true},
+    "getKongLogTypes": {asyncResult: true}
 });
 
 export const MonitorStore = Reflux.createStore({
     listenables: [MonitorActions],
     monitorDatas: {},
+    kongLogTypes: undefined,
 
     getInitialState() {
         return {
-            monitorDatas: this.monitorDatas
+            monitorDatas: this.monitorDatas,
+            kongLogTypes: this.kongLogTypes
         };
+    },
+
+    getKongLogTypes() {
+        const url = URLUtils.qualifyUrl(PLUGIN_API_ENDPOINT);
+        console.log('url:' + url)
+        let promise = fetch('GET', url);
+        promise.then(result => {
+            this.trigger({
+                kongLogTypes: result.kong_log_types,
+            });
+        })
+        MonitorActions.getKongLogTypes.promise(promise);
     },
 
     getMonitorDatas(statType, keyword, field, query, uniqueKey, stackFields, sortOrder, streamId) {
@@ -37,15 +53,15 @@ export const MonitorStore = Reflux.createStore({
         streamId = streamId || null;
         query = query || '*';
         console.log('getMonitorCountDatas query is:' + query)
-        let fetchAllUrl = ApiRoutes.UniversalSearchApiController.fieldTerms(rangeType, query, field, sortOrder, 100, stackFields, timeRange, streamId).url;
+        let fetchAllUrl = ApiRoutes.UniversalSearchApiController.fieldTerms(rangeType, query, field, sortOrder, 1000, stackFields, timeRange, streamId).url;
         let promise1 = fetch('GET', URLUtils.qualifyUrl(fetchAllUrl));
 
         let timeoutQuery = query + ' AND time-taken:\/[1-9][0-9]+.*\/ AND response:<500';
-        let fetchTimeoutUrl = ApiRoutes.UniversalSearchApiController.fieldTerms(rangeType, timeoutQuery, field, sortOrder, 100, stackFields, timeRange, streamId).url;
+        let fetchTimeoutUrl = ApiRoutes.UniversalSearchApiController.fieldTerms(rangeType, timeoutQuery, field, sortOrder, 1000, stackFields, timeRange, streamId).url;
         let promise2 = fetch('GET', URLUtils.qualifyUrl(fetchTimeoutUrl));
 
         let errorQuery = query + ' AND response:>=500';
-        let fetchErrorUrl = ApiRoutes.UniversalSearchApiController.fieldTerms(rangeType, errorQuery, field, sortOrder, 100, stackFields, timeRange, streamId).url;
+        let fetchErrorUrl = ApiRoutes.UniversalSearchApiController.fieldTerms(rangeType, errorQuery, field, sortOrder, 1000, stackFields, timeRange, streamId).url;
         let promise3 = fetch('GET', URLUtils.qualifyUrl(fetchErrorUrl));
 
         let promise = Promise.all([promise1, promise2, promise3]).then((result) => {

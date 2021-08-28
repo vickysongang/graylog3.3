@@ -29,7 +29,6 @@ const TopNDataTable = createReactClass({
     loadDatas() {
         let rateDatas = this.getRateDatas();
         let redAppNames = Object.keys(rateDatas).filter(key => rateDatas[key] > 0.05)
-        console.log(redAppNames)
         let orQuery = ''
         redAppNames.forEach(item => {
             orQuery += 'client_app_name:' + item + ' OR '

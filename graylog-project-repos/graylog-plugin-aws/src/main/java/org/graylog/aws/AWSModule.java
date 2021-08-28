@@ -19,6 +19,7 @@ import org.graylog2.plugin.PluginModule;
 public class AWSModule extends PluginModule {
     @Override
     protected void configure() {
+        System.out.println("AWSModule---------------------------------------------------------------------------------");
         // CloudTrail
         addCodec(CloudTrailCodec.NAME, CloudTrailCodec.class);
         addTransport(CloudTrailTransport.NAME, CloudTrailTransport.class);

@@ -1,8 +1,6 @@
 package org.graylog.plugins.monitor;
 
-import org.graylog.plugins.monitor.alerts.SampleAlertCondition;
-import org.graylog.plugins.monitor.alerts.SampleAlertNotification;
-import org.graylog.plugins.monitor.decorator.SampleDecorator;
+import org.graylog.plugins.monitor.config.MonitorConfigurationResource;
 import org.graylog2.plugin.PluginConfigBean;
 import org.graylog2.plugin.PluginModule;
 
@@ -25,6 +23,7 @@ public class MonitorModule extends PluginModule {
 
     @Override
     protected void configure() {
+        System.out.println("MonitorModule**********************************************************************");
         /*
          * Register your plugin types here.
          *
@@ -44,14 +43,15 @@ public class MonitorModule extends PluginModule {
          * addConfigBeans();
          */
 
-        addAlarmCallback(SampleAlertNotification.class);
-
-        addAlertCondition(SampleAlertCondition.class.getCanonicalName(),
-                SampleAlertCondition.class,
-                SampleAlertCondition.Factory.class);
-
-        installSearchResponseDecorator(searchResponseDecoratorBinder(),
-                SampleDecorator.class,
-                SampleDecorator.Factory.class);
+//        addAlarmCallback(SampleAlertNotification.class);
+//
+//        addAlertCondition(SampleAlertCondition.class.getCanonicalName(),
+//                SampleAlertCondition.class,
+//                SampleAlertCondition.Factory.class);
+//
+//        installSearchResponseDecorator(searchResponseDecoratorBinder(),
+//                SampleDecorator.class,
+//                SampleDecorator.Factory.class);
+        addRestResource(MonitorConfigurationResource.class);
     }
 }

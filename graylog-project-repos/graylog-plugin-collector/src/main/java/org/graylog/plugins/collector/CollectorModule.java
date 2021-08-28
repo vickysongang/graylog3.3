@@ -47,6 +47,7 @@ public class CollectorModule extends PluginModule {
 
     @Override
     protected void configure() {
+        System.out.println("CollectorModule--------------------------------------------------");
         bind(CollectorService.class).to(CollectorServiceImpl.class);
         bind(CollectorConfigurationService.class).asEagerSingleton();
         bind(new TypeLiteral<Supplier<CollectorSystemConfiguration>>(){}).to(CollectorSystemConfigurationSupplier.class);

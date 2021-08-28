@@ -66,6 +66,7 @@ public class IntegrationsModule extends PluginModule {
 
     @Override
     protected void configure() {
+        System.out.println("IntegrationsModule---------------------------------");
         /*
          * Register your plugin types here.
          *
