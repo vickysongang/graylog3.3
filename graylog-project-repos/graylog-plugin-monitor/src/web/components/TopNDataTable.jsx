@@ -28,9 +28,12 @@ const TopNDataTable = createReactClass({
 
     loadDatas() {
         let rateDatas = this.getRateDatas();
-        let redAppNames = Object.keys(rateDatas).filter(key => rateDatas[key] > 0.05)
+
+      //  let unnormalAppNames = Object.keys(rateDatas).filter(key => rateDatas[key] > 0.05)
+        let unnormalAppNames = Object.keys(rateDatas).sort((key1, key2) => rateDatas[key2] - rateDatas[key1]).slice(0, 5)
+        console.log("unnormalAppNames:" + unnormalAppNames)
         let orQuery = ''
-        redAppNames.forEach(item => {
+        unnormalAppNames.forEach(item => {
             orQuery += 'client_app_name:' + item + ' OR '
         })
         if (orQuery) {

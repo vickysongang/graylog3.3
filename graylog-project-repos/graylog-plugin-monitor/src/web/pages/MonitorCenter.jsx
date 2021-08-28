@@ -13,7 +13,8 @@ const MonitorCenter = createReactClass({
     getInitialState() {
 
         return {
-            currentLogType: undefined
+            currentLogType: undefined,
+            date: undefined
         }
     },
 
@@ -25,7 +26,8 @@ const MonitorCenter = createReactClass({
 
     handleClick(logType) {
         this.setState({
-            currentLogType: logType
+            currentLogType: logType,
+            date: new Date()
         })
     },
 
@@ -35,7 +37,9 @@ const MonitorCenter = createReactClass({
             kongLogTypeArray = this.state.kongLogTypes.split(',')
         }
         let currentLogType = this.state.currentLogType || kongLogTypeArray[0]
-        console.log('currentLogType:' , currentLogType)
+        let date = this.state.date
+        let key = currentLogType + (date ? (date+'').replace(/ /g,'-') : '')
+        console.log('currentLogType:' , currentLogType + ' key is:' + key)
         return (
             <Row className="content" style={{padding:'10px'}}>
                 <div>
@@ -62,13 +66,13 @@ const MonitorCenter = createReactClass({
                     </div>
                     <div>
                         <div style={styles.containerItem}>
-                            <MonitorRateBarChart key={"KONG-LOG-24-RATE"}
+                            <MonitorRateBarChart key={"KONG-LOG-24-RATE" + key}
                                                  text="24h内Kong请求"
                                                  keyword="1 day ago"
                                                  subtext="应用异常请求占比（耗时>10s或者响应code>=500）"
                                                  width="100%"
                                                  logType={currentLogType}/>
-                            <MonitorRateBarChart key={"KONG-LOG-48-RATE"}
+                            <MonitorRateBarChart key={"KONG-LOG-48-RATE" + key}
                                                  text="48h-24h内Kong请求"
                                                  keyword="2 days ago to 1 day ago"
                                                  subtext="应用异常请求占比（耗时>10s或者响应code>=500）"
@@ -76,12 +80,12 @@ const MonitorCenter = createReactClass({
                                                  logType={currentLogType}/>
                         </div>
                         <div style={{...styles.containerItem, marginTop: '25px'}}>
-                            <TopNDataTable key={"KONG-LOG-24-Top10"}
+                            <TopNDataTable key={"KONG-LOG-24-Top10" + key}
                                            logType={currentLogType}
                                            keyword="1 day ago"
                                            N={10}
                                            headerTitle="Kong 24h内异常请求访问Top10"/>
-                            <TopNDataTable key={"KONG-LOG-48-TOP10"}
+                            <TopNDataTable key={"KONG-LOG-48-TOP10" + key}
                                            logType={currentLogType}
                                            N={10}
                                            keyword="2 days ago to 1 day ago"
